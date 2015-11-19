@@ -12,22 +12,28 @@
   :void
   (gcc-jit-context-ptr)
   libgccjit.so)
+(defvar gcc-jit-str-option-enum :int
+  "Typedef for gcc_jit_str_option")
 (defvar gcc-jit-const-string-ptr :pointer
   "Typedef for const char *")
 (define-ffi-function gcc-jit-context-set-str-option
   "gcc_jit_context_set_str_option"
   :void
-  (gcc-jit-context-ptr 4 gcc-jit-const-string-ptr)
+  (gcc-jit-context-ptr gcc-jit-str-option-enum gcc-jit-const-string-ptr)
   libgccjit.so)
+(defvar gcc-jit-int-option-enum :int
+  "Typedef for gcc_jit_int_option")
 (define-ffi-function gcc-jit-context-set-int-option
   "gcc_jit_context_set_int_option"
   :void
-  (gcc-jit-context-ptr 4 :int)
+  (gcc-jit-context-ptr gcc-jit-int-option-enum :int)
   libgccjit.so)
+(defvar gcc-jit-bool-option-enum :int
+  "Typedef for gcc_jit_bool_option")
 (define-ffi-function gcc-jit-context-set-bool-option
   "gcc_jit_context_set_bool_option"
   :void
-  (gcc-jit-context-ptr 4 :int)
+  (gcc-jit-context-ptr gcc-jit-bool-option-enum :int)
   libgccjit.so)
 (define-ffi-function gcc-jit-context-set-bool-allow-unreachable-blocks
   "gcc_jit_context_set_bool_allow_unreachable_blocks"
@@ -51,10 +57,12 @@
   gcc-jit-result-ptr
   (gcc-jit-context-ptr)
   libgccjit.so)
+(defvar gcc-jit-output-kind-enum :int
+  "Typedef for gcc_jit_output_kind")
 (define-ffi-function gcc-jit-context-compile-to-file
   "gcc_jit_context_compile_to_file"
   :void
-  (gcc-jit-context-ptr 4 gcc-jit-const-string-ptr)
+  (gcc-jit-context-ptr gcc-jit-output-kind-enum gcc-jit-const-string-ptr)
   libgccjit.so)
 (define-ffi-function gcc-jit-context-dump-to-file
   "gcc_jit_context_dump_to_file"
@@ -124,10 +132,12 @@
   gcc-jit-object-ptr
   (gcc-jit-type-ptr)
   libgccjit.so)
+(defvar gcc-jit-types-enum :int
+  "Typedef for gcc_jit_types")
 (define-ffi-function gcc-jit-context-get-type
   "gcc_jit_context_get_type"
   gcc-jit-type-ptr
-  (gcc-jit-context-ptr 4)
+  (gcc-jit-context-ptr gcc-jit-types-enum)
   libgccjit.so)
 (define-ffi-function gcc-jit-context-get-int-type
   "gcc_jit_context_get_int_type"
@@ -230,12 +240,14 @@
   libgccjit.so)
 (defvar gcc-jit-function-ptr :pointer
   "Typedef for struct gcc_jit_function *")
+(defvar gcc-jit-function-kind-enum :int
+  "Typedef for gcc_jit_function_kind")
 (defvar gcc-jit-param-ptr-ptr :pointer
   "Typedef for struct gcc_jit_param * *")
 (define-ffi-function gcc-jit-context-new-function
   "gcc_jit_context_new_function"
   gcc-jit-function-ptr
-  (gcc-jit-context-ptr gcc-jit-location-ptr 4 gcc-jit-type-ptr gcc-jit-const-string-ptr :int gcc-jit-param-ptr-ptr :int)
+  (gcc-jit-context-ptr gcc-jit-location-ptr gcc-jit-function-kind-enum gcc-jit-type-ptr gcc-jit-const-string-ptr :int gcc-jit-param-ptr-ptr :int)
   libgccjit.so)
 (define-ffi-function gcc-jit-context-get-builtin-function
   "gcc_jit_context_get_builtin_function"
@@ -274,10 +286,12 @@
   gcc-jit-function-ptr
   (gcc-jit-block-ptr)
   libgccjit.so)
+(defvar gcc-jit-global-kind-enum :int
+  "Typedef for gcc_jit_global_kind")
 (define-ffi-function gcc-jit-context-new-global
   "gcc_jit_context_new_global"
   gcc-jit-lvalue-ptr
-  (gcc-jit-context-ptr gcc-jit-location-ptr 4 gcc-jit-type-ptr gcc-jit-const-string-ptr)
+  (gcc-jit-context-ptr gcc-jit-location-ptr gcc-jit-global-kind-enum gcc-jit-type-ptr gcc-jit-const-string-ptr)
   libgccjit.so)
 (define-ffi-function gcc-jit-lvalue-as-object
   "gcc_jit_lvalue_as_object"
@@ -339,20 +353,26 @@
   gcc-jit-rvalue-ptr
   (gcc-jit-context-ptr gcc-jit-const-string-ptr)
   libgccjit.so)
+(defvar gcc-jit-unary-op-enum :int
+  "Typedef for gcc_jit_unary_op")
 (define-ffi-function gcc-jit-context-new-unary-op
   "gcc_jit_context_new_unary_op"
   gcc-jit-rvalue-ptr
-  (gcc-jit-context-ptr gcc-jit-location-ptr 4 gcc-jit-type-ptr gcc-jit-rvalue-ptr)
+  (gcc-jit-context-ptr gcc-jit-location-ptr gcc-jit-unary-op-enum gcc-jit-type-ptr gcc-jit-rvalue-ptr)
   libgccjit.so)
+(defvar gcc-jit-binary-op-enum :int
+  "Typedef for gcc_jit_binary_op")
 (define-ffi-function gcc-jit-context-new-binary-op
   "gcc_jit_context_new_binary_op"
   gcc-jit-rvalue-ptr
-  (gcc-jit-context-ptr gcc-jit-location-ptr 4 gcc-jit-type-ptr gcc-jit-rvalue-ptr gcc-jit-rvalue-ptr)
+  (gcc-jit-context-ptr gcc-jit-location-ptr gcc-jit-binary-op-enum gcc-jit-type-ptr gcc-jit-rvalue-ptr gcc-jit-rvalue-ptr)
   libgccjit.so)
+(defvar gcc-jit-comparison-enum :int
+  "Typedef for gcc_jit_comparison")
 (define-ffi-function gcc-jit-context-new-comparison
   "gcc_jit_context_new_comparison"
   gcc-jit-rvalue-ptr
-  (gcc-jit-context-ptr gcc-jit-location-ptr 4 gcc-jit-rvalue-ptr gcc-jit-rvalue-ptr)
+  (gcc-jit-context-ptr gcc-jit-location-ptr gcc-jit-comparison-enum gcc-jit-rvalue-ptr gcc-jit-rvalue-ptr)
   libgccjit.so)
 (defvar gcc-jit-rvalue-ptr-ptr :pointer
   "Typedef for struct gcc_jit_rvalue * *")
@@ -419,7 +439,7 @@
 (define-ffi-function gcc-jit-block-add-assignment-op
   "gcc_jit_block_add_assignment_op"
   :void
-  (gcc-jit-block-ptr gcc-jit-location-ptr gcc-jit-lvalue-ptr 4 gcc-jit-rvalue-ptr)
+  (gcc-jit-block-ptr gcc-jit-location-ptr gcc-jit-lvalue-ptr gcc-jit-binary-op-enum gcc-jit-rvalue-ptr)
   libgccjit.so)
 (define-ffi-function gcc-jit-block-add-comment
   "gcc_jit_block_add_comment"

@@ -2,31 +2,42 @@
 
 import gcc
 
-pointer_types = {}
+special_types = {}
 
-def note_pointer_type(ptr):
-    global pointer_types
-    if ptr not in pointer_types:
-        targ = ptr.type
-        if targ is gcc.Type.void():
-            name = ":void"
-        else:
-            suffix = "-ptr"
-            while isinstance(targ, gcc.PointerType):
-                suffix += "-ptr"
-                targ = targ.type
-            if targ is gcc.Type.char():
-                name = 'gcc-jit-string'
-            elif targ is gcc.Type.char().const_equivalent:
-                name = 'gcc-jit-const-string'
-            elif isinstance(targ, gcc.RecordType):
-                name = str(targ.name)
+def note_special_type(special):
+    global special_types
+    if special not in special_types:
+        if isinstance(special, gcc.EnumeralType):
+            if special.sizeof == gcc.Type.int().sizeof:
+                equiv = gcc.Type.int()
+            elif special.sizeof == gcc.Type.long().sizeof:
+                equiv = gcc.Type.int()
             else:
-                raise ValueError("Unhandled pointer type", ptr)
-            name = name.replace("_", "-") + suffix
-            print '(defvar %s :pointer\n  "Typedef for %s")' % (name, str(ptr))
-        pointer_types[ptr] = name
-    return pointer_types[ptr]
+                raise ValueError("Unhandled enum type size", t)
+            base_type = convert_type(equiv)
+            name = str(special).replace("_", "-") + "-enum"
+            print '(defvar %s %s\n  "Typedef for %s")' % (name, base_type, str(special))
+        else:
+            targ = special.type
+            if targ is gcc.Type.void():
+                name = ":void"
+            else:
+                suffix = "-ptr"
+                while isinstance(targ, gcc.PointerType):
+                    suffix += "-ptr"
+                    targ = targ.type
+                if targ is gcc.Type.char():
+                    name = 'gcc-jit-string'
+                elif targ is gcc.Type.char().const_equivalent:
+                    name = 'gcc-jit-const-string'
+                elif isinstance(targ, gcc.RecordType):
+                    name = str(targ.name)
+                else:
+                    raise ValueError("Unhandled pointer type", special)
+                name = name.replace("_", "-") + suffix
+                print '(defvar %s :pointer\n  "Typedef for %s")' % (name, str(special))
+        special_types[special] = name
+    return special_types[special]
 
 def from_jit_h(name):
     return name.endswith('libgccjit.h')
@@ -64,14 +75,12 @@ def convert_type(t):
     elif t is gcc.Type.uint64():
         return ":uint64"
     elif isinstance(t, gcc.PointerType):
-        return note_pointer_type(t)
+        return note_special_type(t)
     elif isinstance(t, gcc.EnumeralType):
-        return str(t.sizeof)
+        return note_special_type(t)
     raise ValueError("Unhandled type", t)
 
 def note_declaration(decl, *args, **kwargs):
-    if isinstance(decl, gcc.Constant):
-        print "HI"
     if from_jit_h(decl.location.file) and isinstance(decl, gcc.FunctionDecl):
         c_name = decl.name
         lisp_name = c_name.replace('_', '-')
