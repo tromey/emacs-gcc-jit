@@ -1,6 +1,6 @@
 (require 'ffi)
 (define-ffi-library libgccjit.so "libgccjit")
-(defvar gcc-jit-context-ptr :pointer
+(defconst gcc-jit-context-ptr :pointer
   "Typedef for struct gcc_jit_context *")
 (define-ffi-function gcc-jit-context-acquire
   "gcc_jit_context_acquire"
@@ -14,9 +14,9 @@
   libgccjit.so)
 (defconst GCC-JIT-STR-OPTION-PROGNAME 0)
 (defconst GCC-JIT-NUM-STR-OPTIONS 1)
-(defvar gcc-jit-str-option-enum :int
+(defconst gcc-jit-str-option-enum :int
   "Typedef for gcc_jit_str_option")
-(defvar gcc-jit-const-string-ptr :pointer
+(defconst gcc-jit-const-string-ptr :pointer
   "Typedef for const char *")
 (define-ffi-function gcc-jit-context-set-str-option
   "gcc_jit_context_set_str_option"
@@ -25,7 +25,7 @@
   libgccjit.so)
 (defconst GCC-JIT-INT-OPTION-OPTIMIZATION-LEVEL 0)
 (defconst GCC-JIT-NUM-INT-OPTIONS 1)
-(defvar gcc-jit-int-option-enum :int
+(defconst gcc-jit-int-option-enum :int
   "Typedef for gcc_jit_int_option")
 (define-ffi-function gcc-jit-context-set-int-option
   "gcc_jit_context_set_int_option"
@@ -41,7 +41,7 @@
 (defconst GCC-JIT-BOOL-OPTION-SELFCHECK-GC 6)
 (defconst GCC-JIT-BOOL-OPTION-KEEP-INTERMEDIATES 7)
 (defconst GCC-JIT-NUM-BOOL-OPTIONS 8)
-(defvar gcc-jit-bool-option-enum :int
+(defconst gcc-jit-bool-option-enum :int
   "Typedef for gcc_jit_bool_option")
 (define-ffi-function gcc-jit-context-set-bool-option
   "gcc_jit_context_set_bool_option"
@@ -63,7 +63,7 @@
   :void
   (gcc-jit-context-ptr gcc-jit-const-string-ptr)
   libgccjit.so)
-(defvar gcc-jit-result-ptr :pointer
+(defconst gcc-jit-result-ptr :pointer
   "Typedef for struct gcc_jit_result *")
 (define-ffi-function gcc-jit-context-compile
   "gcc_jit_context_compile"
@@ -74,7 +74,7 @@
 (defconst GCC-JIT-OUTPUT-KIND-OBJECT-FILE 1)
 (defconst GCC-JIT-OUTPUT-KIND-DYNAMIC-LIBRARY 2)
 (defconst GCC-JIT-OUTPUT-KIND-EXECUTABLE 3)
-(defvar gcc-jit-output-kind-enum :int
+(defconst gcc-jit-output-kind-enum :int
   "Typedef for gcc_jit_output_kind")
 (define-ffi-function gcc-jit-context-compile-to-file
   "gcc_jit_context_compile_to_file"
@@ -86,7 +86,7 @@
   :void
   (gcc-jit-context-ptr gcc-jit-const-string-ptr :int)
   libgccjit.so)
-(defvar FILE-ptr :pointer
+(defconst FILE-ptr :pointer
   "Typedef for struct FILE *")
 (define-ffi-function gcc-jit-context-set-logfile
   "gcc_jit_context_set_logfile"
@@ -118,7 +118,7 @@
   :void
   (gcc-jit-result-ptr)
   libgccjit.so)
-(defvar gcc-jit-object-ptr :pointer
+(defconst gcc-jit-object-ptr :pointer
   "Typedef for struct gcc_jit_object *")
 (define-ffi-function gcc-jit-object-get-context
   "gcc_jit_object_get_context"
@@ -130,7 +130,7 @@
   gcc-jit-const-string-ptr
   (gcc-jit-object-ptr)
   libgccjit.so)
-(defvar gcc-jit-location-ptr :pointer
+(defconst gcc-jit-location-ptr :pointer
   "Typedef for struct gcc_jit_location *")
 (define-ffi-function gcc-jit-context-new-location
   "gcc_jit_context_new_location"
@@ -142,7 +142,7 @@
   gcc-jit-object-ptr
   (gcc-jit-location-ptr)
   libgccjit.so)
-(defvar gcc-jit-type-ptr :pointer
+(defconst gcc-jit-type-ptr :pointer
   "Typedef for struct gcc_jit_type *")
 (define-ffi-function gcc-jit-type-as-object
   "gcc_jit_type_as_object"
@@ -172,7 +172,7 @@
 (defconst GCC-JIT-TYPE-COMPLEX-FLOAT 20)
 (defconst GCC-JIT-TYPE-COMPLEX-DOUBLE 21)
 (defconst GCC-JIT-TYPE-COMPLEX-LONG-DOUBLE 22)
-(defvar gcc-jit-types-enum :int
+(defconst gcc-jit-types-enum :int
   "Typedef for gcc_jit_types")
 (define-ffi-function gcc-jit-context-get-type
   "gcc_jit_context_get_type"
@@ -204,7 +204,7 @@
   gcc-jit-type-ptr
   (gcc-jit-context-ptr gcc-jit-location-ptr gcc-jit-type-ptr :int)
   libgccjit.so)
-(defvar gcc-jit-field-ptr :pointer
+(defconst gcc-jit-field-ptr :pointer
   "Typedef for struct gcc_jit_field *")
 (define-ffi-function gcc-jit-context-new-field
   "gcc_jit_context_new_field"
@@ -216,9 +216,9 @@
   gcc-jit-object-ptr
   (gcc-jit-field-ptr)
   libgccjit.so)
-(defvar gcc-jit-struct-ptr :pointer
+(defconst gcc-jit-struct-ptr :pointer
   "Typedef for struct gcc_jit_struct *")
-(defvar gcc-jit-field-ptr-ptr :pointer
+(defconst gcc-jit-field-ptr-ptr :pointer
   "Typedef for struct gcc_jit_field * *")
 (define-ffi-function gcc-jit-context-new-struct-type
   "gcc_jit_context_new_struct_type"
@@ -245,14 +245,14 @@
   gcc-jit-type-ptr
   (gcc-jit-context-ptr gcc-jit-location-ptr gcc-jit-const-string-ptr :int gcc-jit-field-ptr-ptr)
   libgccjit.so)
-(defvar gcc-jit-type-ptr-ptr :pointer
+(defconst gcc-jit-type-ptr-ptr :pointer
   "Typedef for struct gcc_jit_type * *")
 (define-ffi-function gcc-jit-context-new-function-ptr-type
   "gcc_jit_context_new_function_ptr_type"
   gcc-jit-type-ptr
   (gcc-jit-context-ptr gcc-jit-location-ptr gcc-jit-type-ptr :int gcc-jit-type-ptr-ptr :int)
   libgccjit.so)
-(defvar gcc-jit-param-ptr :pointer
+(defconst gcc-jit-param-ptr :pointer
   "Typedef for struct gcc_jit_param *")
 (define-ffi-function gcc-jit-context-new-param
   "gcc_jit_context_new_param"
@@ -264,29 +264,29 @@
   gcc-jit-object-ptr
   (gcc-jit-param-ptr)
   libgccjit.so)
-(defvar gcc-jit-lvalue-ptr :pointer
+(defconst gcc-jit-lvalue-ptr :pointer
   "Typedef for struct gcc_jit_lvalue *")
 (define-ffi-function gcc-jit-param-as-lvalue
   "gcc_jit_param_as_lvalue"
   gcc-jit-lvalue-ptr
   (gcc-jit-param-ptr)
   libgccjit.so)
-(defvar gcc-jit-rvalue-ptr :pointer
+(defconst gcc-jit-rvalue-ptr :pointer
   "Typedef for struct gcc_jit_rvalue *")
 (define-ffi-function gcc-jit-param-as-rvalue
   "gcc_jit_param_as_rvalue"
   gcc-jit-rvalue-ptr
   (gcc-jit-param-ptr)
   libgccjit.so)
-(defvar gcc-jit-function-ptr :pointer
+(defconst gcc-jit-function-ptr :pointer
   "Typedef for struct gcc_jit_function *")
 (defconst GCC-JIT-FUNCTION-EXPORTED 0)
 (defconst GCC-JIT-FUNCTION-INTERNAL 1)
 (defconst GCC-JIT-FUNCTION-IMPORTED 2)
 (defconst GCC-JIT-FUNCTION-ALWAYS-INLINE 3)
-(defvar gcc-jit-function-kind-enum :int
+(defconst gcc-jit-function-kind-enum :int
   "Typedef for gcc_jit_function_kind")
-(defvar gcc-jit-param-ptr-ptr :pointer
+(defconst gcc-jit-param-ptr-ptr :pointer
   "Typedef for struct gcc_jit_param * *")
 (define-ffi-function gcc-jit-context-new-function
   "gcc_jit_context_new_function"
@@ -313,7 +313,7 @@
   :void
   (gcc-jit-function-ptr gcc-jit-const-string-ptr)
   libgccjit.so)
-(defvar gcc-jit-block-ptr :pointer
+(defconst gcc-jit-block-ptr :pointer
   "Typedef for struct gcc_jit_block *")
 (define-ffi-function gcc-jit-function-new-block
   "gcc_jit_function_new_block"
@@ -333,7 +333,7 @@
 (defconst GCC-JIT-GLOBAL-EXPORTED 0)
 (defconst GCC-JIT-GLOBAL-INTERNAL 1)
 (defconst GCC-JIT-GLOBAL-IMPORTED 2)
-(defvar gcc-jit-global-kind-enum :int
+(defconst gcc-jit-global-kind-enum :int
   "Typedef for gcc_jit_global_kind")
 (define-ffi-function gcc-jit-context-new-global
   "gcc_jit_context_new_global"
@@ -404,7 +404,7 @@
 (defconst GCC-JIT-UNARY-OP-BITWISE-NEGATE 1)
 (defconst GCC-JIT-UNARY-OP-LOGICAL-NEGATE 2)
 (defconst GCC-JIT-UNARY-OP-ABS 3)
-(defvar gcc-jit-unary-op-enum :int
+(defconst gcc-jit-unary-op-enum :int
   "Typedef for gcc_jit_unary_op")
 (define-ffi-function gcc-jit-context-new-unary-op
   "gcc_jit_context_new_unary_op"
@@ -423,7 +423,7 @@
 (defconst GCC-JIT-BINARY-OP-LOGICAL-OR 9)
 (defconst GCC-JIT-BINARY-OP-LSHIFT 10)
 (defconst GCC-JIT-BINARY-OP-RSHIFT 11)
-(defvar gcc-jit-binary-op-enum :int
+(defconst gcc-jit-binary-op-enum :int
   "Typedef for gcc_jit_binary_op")
 (define-ffi-function gcc-jit-context-new-binary-op
   "gcc_jit_context_new_binary_op"
@@ -436,14 +436,14 @@
 (defconst GCC-JIT-COMPARISON-LE 3)
 (defconst GCC-JIT-COMPARISON-GT 4)
 (defconst GCC-JIT-COMPARISON-GE 5)
-(defvar gcc-jit-comparison-enum :int
+(defconst gcc-jit-comparison-enum :int
   "Typedef for gcc_jit_comparison")
 (define-ffi-function gcc-jit-context-new-comparison
   "gcc_jit_context_new_comparison"
   gcc-jit-rvalue-ptr
   (gcc-jit-context-ptr gcc-jit-location-ptr gcc-jit-comparison-enum gcc-jit-rvalue-ptr gcc-jit-rvalue-ptr)
   libgccjit.so)
-(defvar gcc-jit-rvalue-ptr-ptr :pointer
+(defconst gcc-jit-rvalue-ptr-ptr :pointer
   "Typedef for struct gcc_jit_rvalue * *")
 (define-ffi-function gcc-jit-context-new-call
   "gcc_jit_context_new_call"
@@ -535,7 +535,7 @@
   :void
   (gcc-jit-block-ptr gcc-jit-location-ptr)
   libgccjit.so)
-(defvar gcc-jit-case-ptr :pointer
+(defconst gcc-jit-case-ptr :pointer
   "Typedef for struct gcc_jit_case *")
 (define-ffi-function gcc-jit-context-new-case
   "gcc_jit_context_new_case"
@@ -547,7 +547,7 @@
   gcc-jit-object-ptr
   (gcc-jit-case-ptr)
   libgccjit.so)
-(defvar gcc-jit-case-ptr-ptr :pointer
+(defconst gcc-jit-case-ptr-ptr :pointer
   "Typedef for struct gcc_jit_case * *")
 (define-ffi-function gcc-jit-block-end-with-switch
   "gcc_jit_block_end_with_switch"
@@ -564,14 +564,14 @@
   :void
   (gcc-jit-context-ptr gcc-jit-const-string-ptr)
   libgccjit.so)
-(defvar gcc-jit-string-ptr-ptr :pointer
+(defconst gcc-jit-string-ptr-ptr :pointer
   "Typedef for char * *")
 (define-ffi-function gcc-jit-context-enable-dump
   "gcc_jit_context_enable_dump"
   :void
   (gcc-jit-context-ptr gcc-jit-const-string-ptr gcc-jit-string-ptr-ptr)
   libgccjit.so)
-(defvar gcc-jit-timer-ptr :pointer
+(defconst gcc-jit-timer-ptr :pointer
   "Typedef for struct gcc_jit_timer *")
 (define-ffi-function gcc-jit-timer-new
   "gcc_jit_timer_new"

@@ -25,7 +25,7 @@ def note_special_type(special):
                 raise ValueError("Unhandled enum type size", t)
             base_type = convert_type(equiv)
             name = str(special).replace("_", "-") + "-enum"
-            print '(defvar %s %s\n  "Typedef for %s")' % (name, base_type, str(special))
+            print '(defconst %s %s\n  "Typedef for %s")' % (name, base_type, str(special))
         else:
             targ = special.type
             if targ is gcc.Type.void():
@@ -44,7 +44,7 @@ def note_special_type(special):
                 else:
                     raise ValueError("Unhandled pointer type", special)
                 name = name.replace("_", "-") + suffix
-                print '(defvar %s :pointer\n  "Typedef for %s")' % (name, str(special))
+                print '(defconst %s :pointer\n  "Typedef for %s")' % (name, str(special))
         special_types[special] = name
     return special_types[special]
 
