@@ -12,6 +12,8 @@
   :void
   (gcc-jit-context-ptr)
   libgccjit.so)
+(defconst GCC-JIT-STR-OPTION-PROGNAME 0)
+(defconst GCC-JIT-NUM-STR-OPTIONS 1)
 (defvar gcc-jit-str-option-enum :int
   "Typedef for gcc_jit_str_option")
 (defvar gcc-jit-const-string-ptr :pointer
@@ -21,6 +23,8 @@
   :void
   (gcc-jit-context-ptr gcc-jit-str-option-enum gcc-jit-const-string-ptr)
   libgccjit.so)
+(defconst GCC-JIT-INT-OPTION-OPTIMIZATION-LEVEL 0)
+(defconst GCC-JIT-NUM-INT-OPTIONS 1)
 (defvar gcc-jit-int-option-enum :int
   "Typedef for gcc_jit_int_option")
 (define-ffi-function gcc-jit-context-set-int-option
@@ -28,6 +32,15 @@
   :void
   (gcc-jit-context-ptr gcc-jit-int-option-enum :int)
   libgccjit.so)
+(defconst GCC-JIT-BOOL-OPTION-DEBUGINFO 0)
+(defconst GCC-JIT-BOOL-OPTION-DUMP-INITIAL-TREE 1)
+(defconst GCC-JIT-BOOL-OPTION-DUMP-INITIAL-GIMPLE 2)
+(defconst GCC-JIT-BOOL-OPTION-DUMP-GENERATED-CODE 3)
+(defconst GCC-JIT-BOOL-OPTION-DUMP-SUMMARY 4)
+(defconst GCC-JIT-BOOL-OPTION-DUMP-EVERYTHING 5)
+(defconst GCC-JIT-BOOL-OPTION-SELFCHECK-GC 6)
+(defconst GCC-JIT-BOOL-OPTION-KEEP-INTERMEDIATES 7)
+(defconst GCC-JIT-NUM-BOOL-OPTIONS 8)
 (defvar gcc-jit-bool-option-enum :int
   "Typedef for gcc_jit_bool_option")
 (define-ffi-function gcc-jit-context-set-bool-option
@@ -57,6 +70,10 @@
   gcc-jit-result-ptr
   (gcc-jit-context-ptr)
   libgccjit.so)
+(defconst GCC-JIT-OUTPUT-KIND-ASSEMBLER 0)
+(defconst GCC-JIT-OUTPUT-KIND-OBJECT-FILE 1)
+(defconst GCC-JIT-OUTPUT-KIND-DYNAMIC-LIBRARY 2)
+(defconst GCC-JIT-OUTPUT-KIND-EXECUTABLE 3)
 (defvar gcc-jit-output-kind-enum :int
   "Typedef for gcc_jit_output_kind")
 (define-ffi-function gcc-jit-context-compile-to-file
@@ -132,6 +149,29 @@
   gcc-jit-object-ptr
   (gcc-jit-type-ptr)
   libgccjit.so)
+(defconst GCC-JIT-TYPE-VOID 0)
+(defconst GCC-JIT-TYPE-VOID-PTR 1)
+(defconst GCC-JIT-TYPE-BOOL 2)
+(defconst GCC-JIT-TYPE-CHAR 3)
+(defconst GCC-JIT-TYPE-SIGNED-CHAR 4)
+(defconst GCC-JIT-TYPE-UNSIGNED-CHAR 5)
+(defconst GCC-JIT-TYPE-SHORT 6)
+(defconst GCC-JIT-TYPE-UNSIGNED-SHORT 7)
+(defconst GCC-JIT-TYPE-INT 8)
+(defconst GCC-JIT-TYPE-UNSIGNED-INT 9)
+(defconst GCC-JIT-TYPE-LONG 10)
+(defconst GCC-JIT-TYPE-UNSIGNED-LONG 11)
+(defconst GCC-JIT-TYPE-LONG-LONG 12)
+(defconst GCC-JIT-TYPE-UNSIGNED-LONG-LONG 13)
+(defconst GCC-JIT-TYPE-FLOAT 14)
+(defconst GCC-JIT-TYPE-DOUBLE 15)
+(defconst GCC-JIT-TYPE-LONG-DOUBLE 16)
+(defconst GCC-JIT-TYPE-CONST-CHAR-PTR 17)
+(defconst GCC-JIT-TYPE-SIZE-T 18)
+(defconst GCC-JIT-TYPE-FILE-PTR 19)
+(defconst GCC-JIT-TYPE-COMPLEX-FLOAT 20)
+(defconst GCC-JIT-TYPE-COMPLEX-DOUBLE 21)
+(defconst GCC-JIT-TYPE-COMPLEX-LONG-DOUBLE 22)
 (defvar gcc-jit-types-enum :int
   "Typedef for gcc_jit_types")
 (define-ffi-function gcc-jit-context-get-type
@@ -240,6 +280,10 @@
   libgccjit.so)
 (defvar gcc-jit-function-ptr :pointer
   "Typedef for struct gcc_jit_function *")
+(defconst GCC-JIT-FUNCTION-EXPORTED 0)
+(defconst GCC-JIT-FUNCTION-INTERNAL 1)
+(defconst GCC-JIT-FUNCTION-IMPORTED 2)
+(defconst GCC-JIT-FUNCTION-ALWAYS-INLINE 3)
 (defvar gcc-jit-function-kind-enum :int
   "Typedef for gcc_jit_function_kind")
 (defvar gcc-jit-param-ptr-ptr :pointer
@@ -286,6 +330,9 @@
   gcc-jit-function-ptr
   (gcc-jit-block-ptr)
   libgccjit.so)
+(defconst GCC-JIT-GLOBAL-EXPORTED 0)
+(defconst GCC-JIT-GLOBAL-INTERNAL 1)
+(defconst GCC-JIT-GLOBAL-IMPORTED 2)
 (defvar gcc-jit-global-kind-enum :int
   "Typedef for gcc_jit_global_kind")
 (define-ffi-function gcc-jit-context-new-global
@@ -353,6 +400,10 @@
   gcc-jit-rvalue-ptr
   (gcc-jit-context-ptr gcc-jit-const-string-ptr)
   libgccjit.so)
+(defconst GCC-JIT-UNARY-OP-MINUS 0)
+(defconst GCC-JIT-UNARY-OP-BITWISE-NEGATE 1)
+(defconst GCC-JIT-UNARY-OP-LOGICAL-NEGATE 2)
+(defconst GCC-JIT-UNARY-OP-ABS 3)
 (defvar gcc-jit-unary-op-enum :int
   "Typedef for gcc_jit_unary_op")
 (define-ffi-function gcc-jit-context-new-unary-op
@@ -360,6 +411,18 @@
   gcc-jit-rvalue-ptr
   (gcc-jit-context-ptr gcc-jit-location-ptr gcc-jit-unary-op-enum gcc-jit-type-ptr gcc-jit-rvalue-ptr)
   libgccjit.so)
+(defconst GCC-JIT-BINARY-OP-PLUS 0)
+(defconst GCC-JIT-BINARY-OP-MINUS 1)
+(defconst GCC-JIT-BINARY-OP-MULT 2)
+(defconst GCC-JIT-BINARY-OP-DIVIDE 3)
+(defconst GCC-JIT-BINARY-OP-MODULO 4)
+(defconst GCC-JIT-BINARY-OP-BITWISE-AND 5)
+(defconst GCC-JIT-BINARY-OP-BITWISE-XOR 6)
+(defconst GCC-JIT-BINARY-OP-BITWISE-OR 7)
+(defconst GCC-JIT-BINARY-OP-LOGICAL-AND 8)
+(defconst GCC-JIT-BINARY-OP-LOGICAL-OR 9)
+(defconst GCC-JIT-BINARY-OP-LSHIFT 10)
+(defconst GCC-JIT-BINARY-OP-RSHIFT 11)
 (defvar gcc-jit-binary-op-enum :int
   "Typedef for gcc_jit_binary_op")
 (define-ffi-function gcc-jit-context-new-binary-op
@@ -367,6 +430,12 @@
   gcc-jit-rvalue-ptr
   (gcc-jit-context-ptr gcc-jit-location-ptr gcc-jit-binary-op-enum gcc-jit-type-ptr gcc-jit-rvalue-ptr gcc-jit-rvalue-ptr)
   libgccjit.so)
+(defconst GCC-JIT-COMPARISON-EQ 0)
+(defconst GCC-JIT-COMPARISON-NE 1)
+(defconst GCC-JIT-COMPARISON-LT 2)
+(defconst GCC-JIT-COMPARISON-LE 3)
+(defconst GCC-JIT-COMPARISON-GT 4)
+(defconst GCC-JIT-COMPARISON-GE 5)
 (defvar gcc-jit-comparison-enum :int
   "Typedef for gcc_jit_comparison")
 (define-ffi-function gcc-jit-context-new-comparison

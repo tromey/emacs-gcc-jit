@@ -4,10 +4,19 @@ import gcc
 
 special_types = {}
 
+def emit_enum_constants(values):
+    for (name, value) in values:
+        name = str(name).replace("_", "-")
+        print "(defconst %s %s)" % (name, value)
+
 def note_special_type(special):
     global special_types
     if special not in special_types:
         if isinstance(special, gcc.EnumeralType):
+            # We check for this attr because it's not available in all
+            # releases of gcc-python-plugin.
+            if hasattr(special, 'values'):
+                emit_enum_constants(special.values)
             if special.sizeof == gcc.Type.int().sizeof:
                 equiv = gcc.Type.int()
             elif special.sizeof == gcc.Type.long().sizeof:
