@@ -19,3 +19,5 @@ There are a few to-do items:
 
 * See if there is some way we can do type-checking on this at runtime
   to avoid egregious errors.
+
+* Maybe write a higher-level binding
