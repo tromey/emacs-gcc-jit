@@ -61,8 +61,7 @@ def convert_type(t):
     elif t is gcc.Type.signed_char():
         return ":schar"
     elif t is gcc.Type.unsigned_char():
-        # A flaw in the ffi-module and maybe libffi
-        return ":char"
+        return ":uchar"
     elif t is gcc.Type.double():
         return ":double"
     elif t is gcc.Type.float():
